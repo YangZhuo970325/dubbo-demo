@@ -1,9 +1,9 @@
 package com.yangzhuo;
 
-import com.alibaba.dubbo.config.spring.context.annotation.DubboComponentScan;
 import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 
 /**
  * SpringBoot与dubbo整合的三种方式
@@ -12,8 +12,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *      导入dubbo-starter，使用@ImportResource导入dubbo的配置文件即可
  * 3）、使用注解api,将每一个组件手动创建到容器中
  */
-//@EnableDubbo
-@EnableDubbo(scanBasePackages = "com.yangzhuo.gmall")
+@EnableHystrix
+@EnableDubbo
+//@EnableDubbo(scanBasePackages = "com.yangzhuo.gmall")
 @SpringBootApplication
 public class App
 {

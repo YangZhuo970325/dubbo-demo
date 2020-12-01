@@ -2,10 +2,12 @@ package com.yangzhuo.gmall.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.yangzhuo.gmall.pojo.UserAddress;
 import com.yangzhuo.gmall.service.OrderService;
 import com.yangzhuo.gmall.service.UserService;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -15,6 +17,8 @@ public class OrderServiceImpl implements OrderService {
     // @Reference(url = "127.0.0.1:20882") dubbo直连的方式
     public UserService userService;
 
+    @HystrixCommand(fallbackMethod = "hello")
+    @Override
     public List<UserAddress> initOrder(String userID) {
         //查询用户的收货地址
         List<UserAddress> userAddressList = userService.getUserAddressList(userID);
@@ -27,5 +31,10 @@ public class OrderServiceImpl implements OrderService {
             System.out.println(userAddress.getUserAddress());
         }
         return userAddressList;
+    }
+
+    public List<UserAddress> hello(String userID) {
+
+        return Arrays.asList(new UserAddress(1, "湖北省仙桃市", "1001", "仙桃", "仙桃", "yes"));
     }
 }
